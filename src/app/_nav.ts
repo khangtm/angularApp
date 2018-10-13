@@ -104,34 +104,34 @@ export const navItems = [
     children: [
       {
         name: 'Buttons',
-        url: '/buttons/buttons',
+        url: './buttons/buttons',
         icon: 'icon-cursor'
       },
       {
         name: 'Dropdowns',
-        url: '/buttons/dropdowns',
+        url: './buttons/dropdowns',
         icon: 'icon-cursor'
       },
       {
         name: 'Brand Buttons',
-        url: '/buttons/brand-buttons',
+        url: './buttons/brand-buttons',
         icon: 'icon-cursor'
       }
     ]
   },
   {
     name: 'Charts',
-    url: '/charts',
+    url: './charts',
     icon: 'icon-pie-chart'
   },
   {
     name: 'Icons',
-    url: '/icons',
+    url: './icons',
     icon: 'icon-star',
     children: [
       {
         name: 'CoreUI Icons',
-        url: '/icons/coreui-icons',
+        url: './icons/coreui-icons',
         icon: 'icon-star',
         badge: {
           variant: 'success',
@@ -140,12 +140,12 @@ export const navItems = [
       },
       {
         name: 'Flags',
-        url: '/icons/flags',
+        url: './icons/flags',
         icon: 'icon-star'
       },
       {
         name: 'Font Awesome',
-        url: '/icons/font-awesome',
+        url: './icons/font-awesome',
         icon: 'icon-star',
         badge: {
           variant: 'secondary',
@@ -154,36 +154,36 @@ export const navItems = [
       },
       {
         name: 'Simple Line Icons',
-        url: '/icons/simple-line-icons',
+        url: './icons/simple-line-icons',
         icon: 'icon-star'
       }
     ]
   },
   {
     name: 'Notifications',
-    url: '/notifications',
+    url: './notifications',
     icon: 'icon-bell',
     children: [
       {
         name: 'Alerts',
-        url: '/notifications/alerts',
+        url: './notifications/alerts',
         icon: 'icon-bell'
       },
       {
         name: 'Badges',
-        url: '/notifications/badges',
+        url: './notifications/badges',
         icon: 'icon-bell'
       },
       {
         name: 'Modals',
-        url: '/notifications/modals',
+        url: './notifications/modals',
         icon: 'icon-bell'
       }
     ]
   },
   {
     name: 'Widgets',
-    url: '/widgets',
+    url: './widgets',
     icon: 'icon-calculator',
     badge: {
       variant: 'info',
@@ -199,27 +199,27 @@ export const navItems = [
   },
   {
     name: 'Pages',
-    url: '/pages',
+    url: './pages',
     icon: 'icon-star',
     children: [
       {
         name: 'Login',
-        url: '/login',
+        url: './login',
         icon: 'icon-star'
       },
       {
         name: 'Register',
-        url: '/register',
+        url: './register',
         icon: 'icon-star'
       },
       {
         name: 'Error 404',
-        url: '/404',
+        url: './404',
         icon: 'icon-star'
       },
       {
         name: 'Error 500',
-        url: '/500',
+        url: './500',
         icon: 'icon-star'
       }
     ]
