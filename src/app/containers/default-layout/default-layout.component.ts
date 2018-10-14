@@ -1,5 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { navItems } from './../../_nav';
+import { Router, ActivatedRoute } from '@angular/router';
+import { AuthenticationService } from '../../services';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -10,7 +13,10 @@ export class DefaultLayoutComponent {
   public sidebarMinimized = true;
   private changes: MutationObserver;
   public element: HTMLElement = document.body;
-  constructor() {
+  constructor(
+    private router: Router,
+    private authenticationService: AuthenticationService
+  ) {
 
     this.changes = new MutationObserver((mutations) => {
       this.sidebarMinimized = document.body.classList.contains('sidebar-minimized');
@@ -19,5 +25,10 @@ export class DefaultLayoutComponent {
     this.changes.observe(<Element>this.element, {
       attributes: true
     });
+  }
+
+  logout(){
+    this.authenticationService.logout();
+    this.router.navigate(['/login']);
   }
 }

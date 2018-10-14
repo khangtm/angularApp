@@ -3,9 +3,10 @@
   <div *ngFor="let alert of alerts">
       <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout">{{ alert.msg }}</alert>
   </div>
+  {{messageAlert}}
   <div class="row">
     <div class="col-lg-12" style="padding-bottom: 5px">
-      <button type="button" class="btn btn-primary float-right" data-toggle="modal" (click)="openRegisterModal(registerModalTemplate)">
+      <button type="button" class="btn btn-primary float-right" data-toggle="modal" (click)="openRegisterModal()">
         <i class="fa fa-plus" style="color:while"></i>
         新規登録
       </button>
@@ -54,12 +55,12 @@
                     </a>
                   </span>
                   <span class="d-inline-block" data-toggle="tooltip" title="View">
-                    <a class="btn btn-success" style="margin-right: 3px;" href="#">
+                    <a class="btn btn-success" style="margin-right: 3px;" (click)="openViewModal(ViewModalTemplate, item.id)">
                       <i class="fa fa-search-plus"></i>
                     </a>
                   </span>
                   <span class="d-inline-block" data-toggle="tooltip" title="Delete">
-                    <a class="btn btn-danger" style="margin-right: 3px;" (click)="openDeleteModal(deleteModalTemplate,item)">
+                    <a class="btn btn-danger" style="margin-right: 3px;" (click)="openDeleteModal(deleteModalTemplate, item.id)">
                       <i class="fa fa-trash-o"></i>
                     </a>
                   </span>
@@ -79,76 +80,63 @@
 </div>
 
 <!-- /.modal -->
-
-<!-- / Register Modal -->
-<ng-template #registerModalTemplate>
+<!-- / View Modal -->
+<ng-template #ViewModalTemplate>
   <div class="modal-header">
     <h4 class="modal-title">監査対象Oracle 編集</h4>
-    <button type="button" class="close" (click)="modalRef.hide()" aria-label="Close">
+    <button type="button" class="close" (click)="closeModal()" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <form name="form" #form="ngForm" (ngSubmit)="form.form.valid && register()" class="form-horizontal" novalidate>
+  <form name="viewForm"  class="form-horizontal" novalidate>
     <div class="modal-body">
       <div class="form-group row">
         <label class="col-md-3 col-form-label" for="registername">登録名</label>
         <div class="col-md-9">
-          <input type="text" id="registername" name="registername" class="form-control is-invalid" [(ngModel)]="registerModel.registername"
-            #registername="ngModel" required [ngClass]="{ 'is-invalid': form.submitted && registername.invalid }">
-          <div *ngIf="form.submitted && registername.invalid" class="invalid-feedback">登録名 is required</div>
+          <input type="text" id="registername" name="registername" class="form-control" [(ngModel)]="viewModel.registername"  disabled>
         </div>
       </div>
       <div class="form-group row">
         <label class="col-md-3 col-form-label" for="hostname">IPアドレス</label>
         <div class="col-md-9">
-          <input type="text" id="hostname" name="hostname" class="form-control" [(ngModel)]="registerModel.hostname" #hostname="ngModel" required
-            [ngClass]="{ 'is-invalid': form.submitted && hostname.invalid }">
-          <div *ngIf="form.submitted && !hostname.valid" class="invalid-feedback">IPアドレス is required</div>
+          <input type="text" id="hostname" name="hostname" class="form-control" [(ngModel)]="viewModel.hostname" disabled>
         </div>
       </div>
       <div class="form-group row">
         <label class="col-md-3 col-form-label" for="servicename">サービス名</label>
         <div class="col-md-9">
-          <input type="text" id="servicename" name="servicename" class="form-control" [(ngModel)]="registerModel.servicename" #servicename="ngModel"
-            [ngClass]="{ 'is-invalid': form.submitted && servicename.invalid }" required>
-          <div *ngIf="form.submitted && !servicename.valid" class="invalid-feedback">サービス名 is required</div>
+          <input type="text" id="servicename" name="servicename" class="form-control" [(ngModel)]="viewModel.servicename" disabled>
         </div>
       </div>
       <div class="form-group row">
         <label class="col-md-3 col-form-label" for="port">ポート番号</label>
         <div class="col-md-9">
-          <input type="text" id="port" name="port" class="form-control" [(ngModel)]="registerModel.port" #port="ngModel" [ngClass]="{ 'is-invalid': form.submitted && port.invalid }"
-            required>
-          <div *ngIf="form.submitted && !port.valid" class="invalid-feedback">ポート番号 is required</div>
+          <input type="text" id="port" name="port" class="form-control" [(ngModel)]="viewModel.port" disabled>
         </div>
       </div>
       <div class="form-group row">
         <label class="col-md-3 col-form-label" for="username">ユーザー名</label>
         <div class="col-md-9">
-          <input type="text" id="username" name="username" class="form-control" [(ngModel)]="registerModel.username" #username="ngModel" [ngClass]="{ 'is-invalid': form.submitted && username.invalid }"
-            required>
-          <div *ngIf="form.submitted && !username.valid" class="invalid-feedback">ユーザー名 is required</div>
+          <input type="text" id="username" name="username" class="form-control" [(ngModel)]="viewModel.username" disabled>
         </div>
       </div>
       <div class="form-group row">
         <label class="col-md-3 col-form-label" for="password">パスワード</label>
         <div class="col-md-9">
-          <input type="password" id="password" name="password" class="form-control" placeholder="Enter password…" [(ngModel)]="registerModel.password"
-            #password="ngModel" [ngClass]="{ 'is-invalid': form.submitted && password.invalid }" required>
-          <div *ngIf="form.submitted && !password.valid" class="invalid-feedback">パスワード is required</div>
+          <input type="password" id="password" name="password" class="form-control" placeholder="********" disabled>
         </div>
       </div>
       <div class="form-group row">
         <label class="col-md-3 col-form-label" for="privilege-radio">ロール</label>
         <div class="col-md-9">
           <div class="form-check form-check-inline mr-1">
-            <input class="form-check-input" type="radio" name="privilege-radio" id="privilege-default" [(ngModel)]="registerModel.privilegeradio"
-              value="privilege-default" checked>
+            <input class="form-check-input" type="radio" name="privilege-radio" id="privilege-default" [(ngModel)]="viewModel.privilegeradio"
+              value="privilege-default" checked disabled>
             <label class="form-check-label" for="privilege-default">デフォルト</label>
           </div>
           <div class="form-check form-check-inline mr-1">
-            <input class="form-check-input" type="radio" name="privilege-radio" id="privilege-sysdba" [(ngModel)]="registerModel.privilegeradio"
-              value="privilege-sysdba">
+            <input class="form-check-input" type="radio" name="privilege-radio" id="privilege-sysdba" [(ngModel)]="viewModel.privilegeradio"
+              value="privilege-sysdba" disabled>
             <label class="form-check-label" for="privilege-sysdba">SYSDBA</label>
           </div>
         </div>
@@ -156,15 +144,12 @@
       <div class="form-group row">
         <label class="col-md-3 col-form-label" for="description">説明</label>
         <div class="col-md-9">
-          <input type="text" id="description" name="description" class="form-control" [(ngModel)]="registerModel.description" #description="ngModel">
+          <input type="text" id="description" name="description" class="form-control" [(ngModel)]="viewModel.description" disabled>
         </div>
       </div>
     </div>
     <div class="modal-footer">
-      <button type="submit" [disabled]="loading" name="save" class="btn btn-primary px-4">保存</button>
-      <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
-      />
-      <button name="cancel" class="btn btn-secondary px-4" (click)="modalRef.hide()">キャンセル</button>
+      <button name="cancel" class="btn btn-primary px-4" (click)="closeModal()">Close</button>
     </div>
   </form>
 </ng-template>
@@ -173,7 +158,7 @@
 <ng-template #deleteModalTemplate>
     <div class="modal-header">
       <h4 class="modal-title pull-left">Delete User</h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
@@ -181,7 +166,7 @@
         <p>Do you want to delete?</p>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-default" (click)="delete(idDelete)" >Yes</button>
-        <button type="button" class="btn btn-primary" (click)="modalRef.hide()" >No</button>
+        <button type="button" class="btn btn-default" (click)="delete(userId)" >Yes</button>
+        <button type="button" class="btn btn-primary" (click)="closeModal()" >No</button>
     </div>
 </ng-template>

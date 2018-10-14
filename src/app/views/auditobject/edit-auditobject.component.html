@@ -1,0 +1,86 @@
+<!-- / Edit Modal -->
+<div class="modal-header">
+  <h4 class="modal-title">監査対象Oracle 編集</h4>
+  <button type="button" class="close" (click)="modalRef.hide()" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<form name="auditForm" #auditForm="ngForm" (ngSubmit)="auditForm.form.valid && edit()" class="form-horizontal" novalidate>
+  <div class="modal-body">
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label" for="registername">登録名</label>
+      <div class="col-md-9">
+        <input type="text" id="registername" name="registername" class="form-control is-invalid" [(ngModel)]="editModel.registername"
+          #registername="ngModel" required [ngClass]="{ 'is-invalid': auditForm.submitted && registername.invalid }">
+        <div *ngIf="auditForm.submitted && registername.invalid" class="invalid-feedback">登録名 is required</div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label" for="hostname">IPアドレス</label>
+      <div class="col-md-9">
+        <input type="text" id="hostname" name="hostname" class="form-control" [(ngModel)]="editModel.hostname" #hostname="ngModel"
+          required [ngClass]="{ 'is-invalid': auditForm.submitted && hostname.invalid }">
+        <div *ngIf="auditForm.submitted && !hostname.valid" class="invalid-feedback">IPアドレス is required</div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label" for="servicename">サービス名</label>
+      <div class="col-md-9">
+        <input type="text" id="servicename" name="servicename" class="form-control" [(ngModel)]="editModel.servicename" #servicename="ngModel"
+          [ngClass]="{ 'is-invalid': auditForm.submitted && servicename.invalid }" required>
+        <div *ngIf="auditForm.submitted && !servicename.valid" class="invalid-feedback">サービス名 is required</div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label" for="port">ポート番号</label>
+      <div class="col-md-9">
+        <input type="text" id="port" name="port" class="form-control" [(ngModel)]="editModel.port" #port="ngModel" [ngClass]="{ 'is-invalid': auditForm.submitted && port.invalid }"
+          required>
+        <div *ngIf="auditForm.submitted && !port.valid" class="invalid-feedback">ポート番号 is required</div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label" for="username">ユーザー名</label>
+      <div class="col-md-9">
+        <input type="text" id="username" name="username" class="form-control" [(ngModel)]="editModel.username" #username="ngModel"
+          [ngClass]="{ 'is-invalid': auditForm.submitted && username.invalid }" required>
+        <div *ngIf="auditForm.submitted && !username.valid" class="invalid-feedback">ユーザー名 is required</div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label" for="password">パスワード</label>
+      <div class="col-md-9">
+        <input type="password" id="password" name="password" class="form-control" placeholder="Enter password…" [(ngModel)]="editModel.password"
+          #password="ngModel" [ngClass]="{ 'is-invalid': auditForm.submitted && password.invalid }" required>
+        <div *ngIf="auditForm.submitted && !password.valid" class="invalid-feedback">パスワード is required</div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label" for="privilege-radio">ロール</label>
+      <div class="col-md-9">
+        <div class="form-check form-check-inline mr-1">
+          <input class="form-check-input" type="radio" name="privilege-radio" id="privilege-default" [(ngModel)]="editModel.privilegeradio"
+            value="privilege-default" checked>
+          <label class="form-check-label" for="privilege-default">デフォルト</label>
+        </div>
+        <div class="form-check form-check-inline mr-1">
+          <input class="form-check-input" type="radio" name="privilege-radio" id="privilege-sysdba" [(ngModel)]="editModel.privilegeradio"
+            value="privilege-sysdba">
+          <label class="form-check-label" for="privilege-sysdba">SYSDBA</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-3 col-form-label" for="description">説明</label>
+      <div class="col-md-9">
+        <input type="text" id="description" name="description" class="form-control" [(ngModel)]="editModel.description" #description="ngModel">
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" [disabled]="loading" name="save" class="btn btn-primary px-4">保存</button>
+    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+    />
+    <button name="cancel" class="btn btn-secondary px-4" (click)="modalRef.hide()">キャンセル</button>
+  </div>
+</form>

@@ -9,10 +9,12 @@ import { P500Component } from './views/error/500.component';
 import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
 
+import { AuthGuard } from './guards/auth.guard';
+
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'dashboard',
     pathMatch: 'full',
   },
   {
@@ -44,8 +46,9 @@ export const routes: Routes = [
     }
   },
   {
-    path: 'ssdb',
+    path: '',
     component: DefaultLayoutComponent,
+    canActivate: [AuthGuard],
     data: {
       title: 'Home'
     },
@@ -83,11 +86,18 @@ export const routes: Routes = [
         loadChildren: './views/widgets/widgets.module#WidgetsModule'
       },
       {
-        path: 'system',
-        loadChildren: './views/system/system.module#SystemModule'
+        path: 'user',
+        loadChildren: './views/user/user.module#UserModule'
+      },
+      {
+        path: 'auditobject',
+        loadChildren: './views/auditobject/auditobject.module#AuditObjectModule'
       }
     ]
-  }
+  },
+
+  // otherwise redirect to home
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

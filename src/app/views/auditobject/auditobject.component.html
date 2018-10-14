@@ -1,0 +1,174 @@
+<div class="animated fadeIn">
+  <!--/.row-->
+  <div *ngFor="let alert of alerts">
+      <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout">{{ alert.msg }}</alert>
+  </div>
+  {{messageAlert}}
+  <div class="row">
+    <div class="col-lg-12" style="padding-bottom: 5px">
+      <button type="button" class="btn btn-primary float-right" data-toggle="modal" (click)="openRegisterModal()">
+        <i class="fa fa-plus" style="color:while"></i>
+        新規登録
+      </button>
+    </div>
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> 監査対象Oracle一覧
+          <div class="col-sm-2 float-right" style="padding-right: 0px; padding-left: 5px">
+            <input type="text" id="searchText" [(ngModel)]="searchText" name="searchText"
+                class="form-control form-control-sm border border-dark" placeholder="検索...">
+          </div>
+          <div class="col-md-2 float-right" style="padding-right: 0px">
+            <select id="searchTag" name="searchTag" [(ngModel)]="searchTag"
+              class="form-control form-control-sm border border-dark">
+              <option value="">タグ | すべて</option>
+              <option value="#e83e8c">Pink Color</option>
+              <option value="#63c2de">Blue Color</option>
+            </select>
+          </div>
+        </div>
+        <div class="card-body">
+          <table class="table table-bordered table-striped table-sm">
+            <thead>
+              <tr>
+                <th width="10%">監査状態</th>
+                <th width="20%">登録名</th>
+                <th width="20%">説明</th>
+                <th width="20%">検索</th>
+                <th width="30%"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of auditObjectList | tableFilter: {tagColor: searchTag} 
+                  | tableFilter: {registeredName: searchText, serviceName: searchText}; let i=index;">
+                <td class="align-middle">
+                  <i [class]="item.auditStatusIcon" [style.color]="item.auditStatusIconColor"
+                    style="font-size:20px"></i>
+                </td>
+                <td class="align-middle">
+                  <i class="fa fa-square" [style.color]="item.tagColor" style="font-size:20px"></i>
+                  {{item.registeredName}}
+                </td>
+                <td class="align-middle">
+                  {{item.serviceName}}
+                </td>
+                <td class="align-middle">
+                  {{item.description}}
+                </td>
+                <td class="align-middle">
+                    <a class="btn btn-light" style="margin-right: 3px;" (click)="openEditModal(item.id)">
+                      編集
+                    </a>
+                    <a class="btn btn-light" style="margin-right: 3px;" (click)="openViewModal(ViewModalTemplate, item.id)">
+                      削除
+                    </a>
+                    <a class="btn btn-light" style="margin-right: 3px;" (click)="openDeleteModal(deleteModalTemplate, item.id)">
+                      参照
+                    </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="col-xs-12 col-12" style="padding-left: 0px">
+            <pagination [boundaryLinks]="true" [totalItems]="totalItems" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+  </div>
+  <!--/.row-->
+</div>
+
+<!-- /.modal -->
+<!-- / View Modal -->
+<ng-template #ViewModalTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title">監査対象Oracle 編集</h4>
+    <button type="button" class="close" (click)="closeModal()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form name="viewForm"  class="form-horizontal" novalidate>
+    <div class="modal-body">
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label" for="registername">登録名</label>
+        <div class="col-md-9">
+          <input type="text" id="registername" name="registername" class="form-control" [(ngModel)]="viewModel.registername"  disabled>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label" for="hostname">IPアドレス</label>
+        <div class="col-md-9">
+          <input type="text" id="hostname" name="hostname" class="form-control" [(ngModel)]="viewModel.hostname" disabled>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label" for="servicename">サービス名</label>
+        <div class="col-md-9">
+          <input type="text" id="servicename" name="servicename" class="form-control" [(ngModel)]="viewModel.servicename" disabled>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label" for="port">ポート番号</label>
+        <div class="col-md-9">
+          <input type="text" id="port" name="port" class="form-control" [(ngModel)]="viewModel.port" disabled>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label" for="username">ユーザー名</label>
+        <div class="col-md-9">
+          <input type="text" id="username" name="username" class="form-control" [(ngModel)]="viewModel.username" disabled>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label" for="password">パスワード</label>
+        <div class="col-md-9">
+          <input type="password" id="password" name="password" class="form-control" placeholder="********" disabled>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label" for="privilege-radio">ロール</label>
+        <div class="col-md-9">
+          <div class="form-check form-check-inline mr-1">
+            <input class="form-check-input" type="radio" name="privilege-radio" id="privilege-default" [(ngModel)]="viewModel.privilegeradio"
+              value="privilege-default" checked disabled>
+            <label class="form-check-label" for="privilege-default">デフォルト</label>
+          </div>
+          <div class="form-check form-check-inline mr-1">
+            <input class="form-check-input" type="radio" name="privilege-radio" id="privilege-sysdba" [(ngModel)]="viewModel.privilegeradio"
+              value="privilege-sysdba" disabled>
+            <label class="form-check-label" for="privilege-sysdba">SYSDBA</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label" for="description">説明</label>
+        <div class="col-md-9">
+          <input type="text" id="description" name="description" class="form-control" [(ngModel)]="viewModel.description" disabled>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button name="cancel" class="btn btn-primary px-4" (click)="closeModal()">Close</button>
+    </div>
+  </form>
+</ng-template>
+
+<!-- / Delete Modal -->
+<ng-template #deleteModalTemplate>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Delete User</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <p>Do you want to delete?</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="delete(userId)" >Yes</button>
+        <button type="button" class="btn btn-primary" (click)="closeModal()" >No</button>
+    </div>
+</ng-template>

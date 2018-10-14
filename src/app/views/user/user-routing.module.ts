@@ -7,18 +7,10 @@ import { UserComponent } from './user.component';
 const routes: Routes = [
   {
     path: '',
+    component: UserComponent,
     data: {
-      title: 'System'
-    },
-    children: [
-      {
-        path: 'user',
-        component: UserComponent,
-        data: {
-          title: 'User'
-        }
-      }
-    ]
+      title: 'User'
+    }
   }
 ];
 
@@ -26,4 +18,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class SystemRoutingModule {}
+export class UserRoutingModule {}

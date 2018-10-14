@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 
 import { UserComponent } from './user.component';
 import { EditUserComponent } from './edit-user.component';
+import { CreateUserComponent } from './create-user.component';
 
 // Pagination Component
 import { PaginationModule } from 'ngx-bootstrap/pagination';
@@ -13,10 +14,13 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ModalModule } from 'ngx-bootstrap/modal';
 
 // System Routing
-import { SystemRoutingModule } from './system-routing.module';
+import { UserRoutingModule } from './user-routing.module';
 
 // Import pipes
-import { TableFilterPipe } from '../../pipes/table-filter.pipe';
+import { PipesModule } from '../../pipes/pipes.module';
+
+// Import service
+import { ModalService } from '../../services/model.service';
 
 // Alert Component
 import { AlertModule } from 'ngx-bootstrap/alert';
@@ -29,15 +33,21 @@ import { AlertModule } from 'ngx-bootstrap/alert';
     AlertModule,
     PaginationModule.forRoot(),
     ModalModule.forRoot(),
-    SystemRoutingModule
+    PipesModule,
+    UserRoutingModule
   ],
   declarations: [
-    TableFilterPipe,
     UserComponent,
+    CreateUserComponent,
     EditUserComponent
   ],
+  providers: [
+    ModalService,
+    
+  ],
   entryComponents: [
+    CreateUserComponent,
     EditUserComponent,
   ]
 })
-export class SystemModule { }
+export class UserModule { }
