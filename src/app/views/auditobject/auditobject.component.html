@@ -35,18 +35,27 @@
           </div>
         </div>
         <div class="card-body">
-          <table class="table table-bordered table-striped table-sm">
+          <table class="table table-bordered table-striped table-sm"
+            [mfData]="auditObjectList" #mf="mfDataTable">
             <thead>
               <tr>
-                <th width="10%">監査状態</th>
-                <th width="20%">登録名</th>
-                <th width="20%">説明</th>
-                <th width="20%">検索</th>
+                <th width="10%" >
+                  監査状態
+                </th>
+                <th width="20%">
+                    <sortable-column by="registeredName">登録名</sortable-column>
+                </th>
+                <th width="20%">
+                  説明 
+                </th>
+                <th width="20%">
+                  検索
+                </th>
                 <th width="30%"></th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let item of auditObjectList | tableFilter: {tagColor: searchTag} 
+              <tr *ngFor="let item of mf.data | tableFilter: {tagColor: searchTag} 
                   | tableFilter: {registeredName: searchText, serviceName: searchText}; let i=index;">
                 <td class="align-middle">
                   <i [class]="item.auditStatusIcon" [style.color]="item.auditStatusIconColor"

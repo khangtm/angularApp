@@ -25,6 +25,10 @@ import { ModalService } from '../../services/model.service';
 // Alert Component
 import { AlertModule } from 'ngx-bootstrap/alert';
 
+// Import sort column
+import { DataTable} from '../../directives/sort-column.directive';
+import { SortColumnComponent } from '../../directives/sort-column.component';
+
 
 @NgModule({
   imports: [
@@ -39,7 +43,9 @@ import { AlertModule } from 'ngx-bootstrap/alert';
   declarations: [
     AuditObjectComponent,
     CreateAuditObjectComponent,
-    EditAuditObjectComponent
+    EditAuditObjectComponent,
+    DataTable,
+    SortColumnComponent,
   ],
   providers: [
     ModalService,
