@@ -23,8 +23,14 @@
             <select id="searchTag" name="searchTag" [(ngModel)]="searchTag"
               class="form-control form-control-sm border border-dark">
               <option value="">タグ | すべて</option>
-              <option value="#e83e8c">Pink Color</option>
-              <option value="#63c2de">Blue Color</option>
+              <option value="#e83e8c">
+                <i class="fa fa-square" style="font-size:20px; color:#e83e8c"></i>
+                ピンク色
+              </option>
+              <option value="#63c2de">
+                <i class="fa fa-square" style="font-size:20px; color:#63c2de"></i>
+                青色
+              </option>
             </select>
           </div>
         </div>
@@ -60,10 +66,10 @@
                     <a class="btn btn-light" style="margin-right: 3px;" (click)="openEditModal(item.id)">
                       編集
                     </a>
-                    <a class="btn btn-light" style="margin-right: 3px;" (click)="openViewModal(ViewModalTemplate, item.id)">
-                      削除
+                    <a class="btn btn-light" style="margin-right: 3px;" (click)="openDeleteModal(ViewModalTemplate, item.id)">
+                     削除
                     </a>
-                    <a class="btn btn-light" style="margin-right: 3px;" (click)="openDeleteModal(deleteModalTemplate, item.id)">
+                    <a class="btn btn-light" style="margin-right: 3px;" (click)="openViewModal(ViewModalTemplate, item.id)">
                       参照
                     </a>
                 </td>
@@ -85,7 +91,7 @@
 <!-- / View Modal -->
 <ng-template #ViewModalTemplate>
   <div class="modal-header">
-    <h4 class="modal-title">監査対象Oracle 編集</h4>
+    <h4 class="modal-title">{{modalTitle}}</h4>
     <button type="button" class="close" (click)="closeModal()" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -151,7 +157,8 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button name="cancel" class="btn btn-primary px-4" (click)="closeModal()">Close</button>
+      <button *ngIf="visibleDeleteButton" name="delete" class="btn btn-primary px-4" (click)="delete(userId)">削除</button>
+      <button name="cancel" class="btn btn-secondary px-4" (click)="closeModal()">キャンセル</button>
     </div>
   </form>
 </ng-template>
@@ -159,16 +166,16 @@
 <!-- / Delete Modal -->
 <ng-template #deleteModalTemplate>
     <div class="modal-header">
-      <h4 class="modal-title pull-left">Delete User</h4>
+      <h4 class="modal-title pull-left">監査対象Oracle  削除</h4>
       <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-        <p>Do you want to delete?</p>
+        <p>監査対象Oracleを削除しますか？</p>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-default" (click)="delete(userId)" >Yes</button>
-        <button type="button" class="btn btn-primary" (click)="closeModal()" >No</button>
+        <button type="button" class="btn btn-default" (click)="delete(userId)" >はい</button>
+        <button type="button" class="btn btn-primary" (click)="closeModal()" >いいえ</button>
     </div>
 </ng-template>

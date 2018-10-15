@@ -57,32 +57,29 @@ export class AuditObjectComponent implements OnInit {
   //-- START: Open Modal
   viewModel: any = {};
   userId : number;
+  visibleDeleteButton = false;
+  modalTitle: String;
 
   openDeleteModal(template: TemplateRef<any>, id: number) {
     this.userId = id;
-    const modalParams = Object.assign({},{class: 'modal-dialog-centered modal-sm' });
+    this.visibleDeleteButton = true;
+    this.modalTitle = "監査対象Oracle 削除"
+    this.view(id);
+    const modalParams = Object.assign({},{class: 'modal-dialog-centered modal-lg' });
     this.modalService.openModalByTemplate(template, modalParams);
   }
 
   openViewModal(template: TemplateRef<any>, id: number) {
+    this.visibleDeleteButton = false;
+    this.modalTitle = "監査対象Oracle 参照"
     this.view(id);
     const modalParams = Object.assign({},{class: 'modal-dialog-centered modal-lg' });
     this.modalService.openModalByTemplate(template, modalParams);
   }
 
   openRegisterModal(){
-    const initialState = {
-      message: "",  
-    };
-    const modalParams = Object.assign({},{initialState, class: 'modal-dialog-centered modal-lg' });
-    let messageReturn = this.modalService.openModalComponent(CreateAuditObjectComponent, modalParams);
-
-    // Get message return
-    // messageReturn.subscribe((content) => {
-    //   if(content['message'] !== ""){
-    //     this.addMessage('success',content['message']);
-    //   }
-    // });
+    const modalParams = Object.assign({},{class: 'modal-dialog-centered modal-lg' });
+    this.modalService.openModalComponent(CreateAuditObjectComponent, modalParams);
   }
 
   openEditModal(userId) {
@@ -91,14 +88,6 @@ export class AuditObjectComponent implements OnInit {
     };
     const modalParams = Object.assign({}, {initialState, class: 'modal-dialog-centered modal-lg' });
     this.modalService.openModalComponent(EditAuditObjectComponent, modalParams);
-    
-    //let messageReturn = this.modalService.openModalComponent(EditUserComponent, modalParams);
-    // Get message return
-    // messageReturn.subscribe((content) => {
-    //   if(content['message'] !== ""){
-    //     this.addMessage('success',content['message']);
-    //   }
-    // });
   }
 
   closeModal(){
@@ -149,16 +138,17 @@ export class AuditObjectComponent implements OnInit {
 
   //-- END: Paging
 
-  // Delete user
+  //-- START : ACTION
+
+  // Delete audit object
   delete(id: number){
-    console.log("Delete user : " + id);
-    //this.userList.splice(index, 1); 
     this.auditObjectList = this.auditObjectList.filter(item => item.id !== id);
     this.closeModal();
-    let message = "User " + id  + " is deleted";
+    let message = "監査対象Oracleを削除しました。";
     this.addMessage('success',message);
   }
 
+  // View audit object
   view(id: number){
     this.viewModel = {
       id: this.userId,
@@ -173,6 +163,7 @@ export class AuditObjectComponent implements OnInit {
     };
   }
 
+  // -- END: ACTION
 
   // Add alert
   private addMessage(type:String, message:String){

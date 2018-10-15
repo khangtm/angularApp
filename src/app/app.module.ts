@@ -19,7 +19,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing';
 
 // used to create fake backend
-import { fakeBackendProvider } from './helpers';
+//import { fakeBackendProvider } from './helpers';
 
 // Import services
 import { AuthGuard } from './guards/auth.guard';
@@ -74,11 +74,10 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
     AppComponent,
     ...APP_CONTAINERS,
     AlertComponent,
-    //TableFilterPipe,
     P404Component,
     P500Component,
     LoginComponent,
-    RegisterComponent,
+    RegisterComponent
   ],
   providers: [
     AuthGuard,

@@ -10,12 +10,17 @@ import { AlertService } from '../../services';
 })
 export class CreateAuditObjectComponent implements OnInit {
 
+  modalTitle: String;
+  loading = false;
+  registerModel: any = {};
+
   constructor(
     public modalRef: BsModalRef,
     private alertService: AlertService
   ) { }
 
   ngOnInit(){
+    this.modalTitle = "監査対象Oracle 登録";
     this.registerModel = {
       registername : '',
       hostname : '',
@@ -28,17 +33,17 @@ export class CreateAuditObjectComponent implements OnInit {
     };
   }
 
-  loading = false;
-  message : String;
-  registerModel: any = {};
+  
+  //-- START : ACTION
 
-  //Create user
+  // Register audit object
   create() {
     this.loading = true;
     console.log(this.registerModel);
     this.loading = false;
     this.modalRef.hide();
-    this.message = "Create successfully"
-    this.alertService.success('Registration successful');
+    this.alertService.success('監査対象Oracleを登録しました。');
   }
+
+  // -- END: ACTION
 }

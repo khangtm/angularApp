@@ -9,12 +9,18 @@ import { AlertService } from '../../services';
 })
 export class EditAuditObjectComponent implements OnInit {
 
+  modalTitle: String;
+  loading = false;
+  userId : number;
+  editModel: any = {};
+
   constructor(
     public modalRef: BsModalRef,
     private alertService: AlertService
   ) { }
 
   ngOnInit(){
+    this.modalTitle = "監査対象Oracle 編集";
     this.editModel = {
       id: this.userId,
       registername : '登録名',
@@ -28,16 +34,16 @@ export class EditAuditObjectComponent implements OnInit {
     };
   }
 
-  loading = false;
-  userId : number;
-  editModel: any = {};
+  //-- START : ACTION
 
-  //Register user
+  // Edit audit object
   edit() {
     this.loading = true;
     console.log(this.editModel);
     this.loading = false;
     this.modalRef.hide();
-    this.alertService.success('Edit successful');
+    this.alertService.success('監査対象Oracleを編集しました。');
   }
+
+  // -- END: ACTION
 }
