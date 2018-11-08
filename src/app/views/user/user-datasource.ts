@@ -3,15 +3,16 @@ export const UserDataSource = [
     id: 1,
     username: 'Vishnu Serghei 1',
     dateRegistered: '2012/01/01',
-    role: 'Member',
+    role: {id:1, name:'Member'},
     status: 'Active',
     statusCssClass: 'badge badge-success'
+    
   },
   {
     id: 2,
     username: 'Zbyněk Phoibos 2',
     dateRegistered: '2012/01/01',
-    role: 'Staff',
+    role: {id:2, name:'Staff'},
     status: 'Banned',
     statusCssClass: 'badge badge-danger'
   },
@@ -19,7 +20,7 @@ export const UserDataSource = [
     id: 3,
     username: 'Einar Randall 3',
     dateRegistered: '2012/01/01',
-    role: 'Admin',
+    role: {id:3, name:'Admin'},
     status: 'Inactive',
     statusCssClass: 'badge badge-secondary'
   },
@@ -27,7 +28,7 @@ export const UserDataSource = [
     id: 4,
     username: 'Félix Troels 4',
     dateRegistered: '2012/01/01',
-    role: 'Admin',
+    role: {id:3, name:'Admin'},
     status: 'Pending',
     statusCssClass: 'badge badge-warning'
   },
@@ -35,7 +36,7 @@ export const UserDataSource = [
     id: 5,
     username: 'Vishnu Serghei 5',
     dateRegistered: '2012/01/01',
-    role: 'Member',
+    role: {id:3, name:'Admin'},
     status: 'Active',
     statusCssClass: 'badge badge-success'
   },
@@ -43,7 +44,7 @@ export const UserDataSource = [
     id: 6,
     username: 'Zbyněk Phoibos 6',
     dateRegistered: '2012/01/01',
-    role: 'Staff',
+    role: {id:3, name:'Admin'},
     status: 'Banned',
     statusCssClass: 'badge badge-danger'
   },
@@ -51,7 +52,7 @@ export const UserDataSource = [
     id: 7,
     username: 'Einar Randall 7',
     dateRegistered: '2012/01/01',
-    role: 'Admin',
+    role: {id:3, name:'Admin'},
     status: 'Inactive',
     statusCssClass: 'badge badge-secondary'
   },
@@ -59,7 +60,7 @@ export const UserDataSource = [
     id: 8,
     username: 'Félix Troels 8',
     dateRegistered: '2012/01/01',
-    role: 'Admin',
+    role: {id:3, name:'Admin'},
     status: 'Pending',
     statusCssClass: 'badge badge-warning'
   },
@@ -67,7 +68,7 @@ export const UserDataSource = [
     id: 9,
     username: 'Vishnu Serghei 9',
     dateRegistered: '2012/01/01',
-    role: 'Member',
+    role: {id:3, name:'Admin'},
     status: 'Active',
     statusCssClass: 'badge badge-success'
   },
@@ -75,7 +76,7 @@ export const UserDataSource = [
     id: 10,
     username: 'Zbyněk Phoibos 10',
     dateRegistered: '2012/01/01',
-    role: 'Staff',
+    role: {id:3, name:'Admin'},
     status: 'Banned',
     statusCssClass: 'badge badge-danger'
   },
@@ -83,7 +84,7 @@ export const UserDataSource = [
     id: 11,
     username: 'Einar Randall 11',
     dateRegistered: '2012/01/01',
-    role: 'Admin',
+    role: {id:3, name:'Admin'},
     status: 'Inactive',
     statusCssClass: 'badge badge-secondary'
   },
@@ -91,7 +92,7 @@ export const UserDataSource = [
     id: 12,
     username: 'Félix Troels',
     dateRegistered: '2012/01/01',
-    role: 'Admin',
+    role: {id:3, name:'Admin'},
     status: 'Pending',
     statusCssClass: 'badge badge-warning'
   },
@@ -99,7 +100,7 @@ export const UserDataSource = [
     id: 13,
     username: 'Vishnu Serghei',
     dateRegistered: '2012/01/01',
-    role: 'Member',
+    role: {id:3, name:'Admin'},
     status: 'Active',
     statusCssClass: 'badge badge-success'
   },
@@ -107,7 +108,7 @@ export const UserDataSource = [
     id: 14,
     username: 'Zbyněk Phoibos',
     dateRegistered: '2012/01/01',
-    role: 'Staff',
+    role: {id:3, name:'Admin'},
     status: 'Banned',
     statusCssClass: 'badge badge-danger'
   },
@@ -115,7 +116,7 @@ export const UserDataSource = [
     id: 15,
     username: 'Einar Randall',
     dateRegistered: '2012/01/01',
-    role: 'Admin',
+    role: {id:3, name:'Admin'},
     status: 'Inactive',
     statusCssClass: 'badge badge-secondary'
   },
@@ -123,7 +124,7 @@ export const UserDataSource = [
     id: 16,
     username: 'Félix Troels',
     dateRegistered: '2012/01/01',
-    role: 'Admin',
+    role: {id:3, name:'Admin'},
     status: 'Pending',
     statusCssClass: 'badge badge-warning'
   },
@@ -131,7 +132,7 @@ export const UserDataSource = [
     id: 17,
     username: 'Vishnu Serghei',
     dateRegistered: '2012/01/01',
-    role: 'Member',
+    role: {id:3, name:'Admin'},
     status: 'Active',
     statusCssClass: 'badge badge-success'
   },
@@ -139,7 +140,7 @@ export const UserDataSource = [
     id: 18,
     username: 'Zbyněk Phoibos',
     dateRegistered: '2012/01/01',
-    role: 'Staff',
+    role: {id:3, name:'Admin'},
     status: 'Banned',
     statusCssClass: 'badge badge-danger'
   },
@@ -147,7 +148,7 @@ export const UserDataSource = [
     id: 19,
     username: 'Einar Randall',
     dateRegistered: '2012/01/01',
-    role: 'Admin',
+    role: {id:3, name:'Admin'},
     status: 'Inactive',
     statusCssClass: 'badge badge-secondary'
   },
@@ -155,7 +156,7 @@ export const UserDataSource = [
     id: 20,
     username: 'Félix Troels',
     dateRegistered: '2012/01/01',
-    role: 'Admin',
+    role: {id:3, name:'Admin'},
     status: 'Pending',
     statusCssClass: 'badge badge-warning'
   },
@@ -163,7 +164,7 @@ export const UserDataSource = [
     id: 21,
     username: 'Vishnu Serghei',
     dateRegistered: '2012/01/01',
-    role: 'Member',
+    role: {id:3, name:'Admin'},
     status: 'Active',
     statusCssClass: 'badge badge-success'
   },
@@ -171,7 +172,7 @@ export const UserDataSource = [
     id: 22,
     username: 'Zbyněk Phoibos',
     dateRegistered: '2012/01/01',
-    role: 'Staff',
+    role: {id:3, name:'Admin'},
     status: 'Banned',
     statusCssClass: 'badge badge-danger'
   },
@@ -179,7 +180,7 @@ export const UserDataSource = [
     id: 23,
     username: 'Einar Randall',
     dateRegistered: '2012/01/01',
-    role: 'Admin',
+    role: {id:3, name:'Admin'},
     status: 'Inactive',
     statusCssClass: 'badge badge-secondary'
   },
@@ -187,7 +188,7 @@ export const UserDataSource = [
     id: 24,
     username: 'Félix Troels',
     dateRegistered: '2012/01/01',
-    role: 'Admin',
+    role: {id:3, name:'Admin'},
     status: 'Pending',
     statusCssClass: 'badge badge-warning'
   },
