@@ -7,23 +7,23 @@ import { User } from '../models/user';
 export class UserService {
     constructor(private http: HttpClient) { }
  
-    getAll() {
-        return this.http.get<User[]>(`${environment.apiUrl}/users`);
+    getAll(searchCondition: any) {
+        return this.http.post(`${environment.apiUrl}/accounts/list`, searchCondition);
     }
 
     getById(id: number) {
         return this.http.get(`${environment.apiUrl}/users/` + id);
     }
 
-    register(user: User) {
-        return this.http.post(`${environment.apiUrl}/users/register`, user);
+    register(user: any) {
+        return this.http.post(`${environment.apiUrl}/accounts/register`, user);
     }
 
     update(user: User) {
-        return this.http.put(`${environment.apiUrl}/users/` + user.id, user);
+        return this.http.put(`${environment.apiUrl}/accounts/update`, user);
     }
 
     delete(id: number) {
-        return this.http.delete(`${environment.apiUrl}/users/` + id);
+        return this.http.delete(`${environment.apiUrl}/accounts/delete/` + id);
     }
 }

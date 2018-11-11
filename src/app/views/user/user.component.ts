@@ -15,6 +15,8 @@ import { EditUserComponent } from './edit-user.component';
 import { CreateUserComponent } from './create-user.component';
 
 import { UserDataSource } from './user-datasource';
+import { UserService } from '../../services/index';
+import { first } from 'rxjs/operators';
 
 
 @Component({
@@ -24,34 +26,48 @@ import { UserDataSource } from './user-datasource';
 export class UserComponent implements OnInit {
   
   userDataSource = UserDataSource;
-  userList = [];
-
-  alerts: any = [];
-  private subscription: Subscription;
+  alertMessage: any = {};
 
   //table filter
   searchText : string;
   searchRole : string = "";
-  
+
+  // paging  
+  itemsPerPage: number   = 20;
+  currentPage: number   = 1;
+
+  // searchResul
+  items: any;
+  totalItems: number;
 
   constructor(
     private modalService: ModalService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private userService: UserService,
+    
   ) { }
 
   ngOnInit(){
-    this.totalItems = this.userDataSource.length;
-    this.getPageItems(1);
-
-    this.subscription = this.alertService.getMessage().subscribe(message => { 
-      if(message){
-        this.addMessage(message['type'], message['text']); 
-      } 
-    });
+    this.searchData(this.currentPage);
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
+  searchData(pageNo :number) {
+    const searchCondition = {
+      paging : {pageSize: this.itemsPerPage, pageNo: pageNo},
+      condition : {username: this.searchText, role: this.searchRole},
+      sortBy : {column : 'account.username', order: "ASC"}
+    }
+    this.userService.getAll(searchCondition).pipe(first())
+    .subscribe(
+      data => {
+        let result: any = data;
+        this.items = result.items;
+        this.totalItems = result.totalItems;
+        console.log(this.items);
+      },
+      error => {
+        this.alertMessage = {  type: 'danger',  msg: error}
+    });
   }
 
   //-- START: Open Modal
@@ -59,7 +75,6 @@ export class UserComponent implements OnInit {
   userId : number;
 
   openDeleteModal(template: TemplateRef<any>, id: number) {
-    this.userId = id;
     const modalParams = Object.assign({},{class: 'modal-dialog-centered modal-sm' });
     this.modalService.openModalByTemplate(template, modalParams);
   }
@@ -71,34 +86,16 @@ export class UserComponent implements OnInit {
   }
 
   openRegisterModal(){
-    const initialState = {
-      message: "",  
-    };
-    const modalParams = Object.assign({},{initialState, class: 'modal-dialog-centered modal-lg' });
+    const modalParams = Object.assign({},{class: 'modal-dialog-centered modal-lg' });
     let messageReturn = this.modalService.openModalComponent(CreateUserComponent, modalParams);
-
-    // Get message return
-    // messageReturn.subscribe((content) => {
-    //   if(content['message'] !== ""){
-    //     this.addMessage('success',content['message']);
-    //   }
-    // });
   }
 
-  openEditModal(userId) {
+  openEditModal(userInfo) {
     const initialState = {
-      userId: userId  
+      userInfo: userInfo  
     };
     const modalParams = Object.assign({}, {initialState, class: 'modal-dialog-centered modal-lg' });
     this.modalService.openModalComponent(EditUserComponent, modalParams);
-    
-    //let messageReturn = this.modalService.openModalComponent(EditUserComponent, modalParams);
-    // Get message return
-    // messageReturn.subscribe((content) => {
-    //   if(content['message'] !== ""){
-    //     this.addMessage('success',content['message']);
-    //   }
-    // });
   }
 
   closeModal(){
@@ -108,43 +105,14 @@ export class UserComponent implements OnInit {
   //-- END: Open Modal
   
   //-- START: Paging
-  totalItems: number = 64;
-  currentPage: number   = 1;
-  smallnumPages: number = 0;
-  pageSize: number = 10;
-
-  maxSize: number = 5;
-  bigTotalItems: number = 675;
-  bigCurrentPage: number = 1;
-  numPages: number = 0;
-
-  currentPager: number   = 1;
-
   setPage(pageNo: number){
     this.currentPage = pageNo;
-  }
-
-  getPageItems(pageNo : number) {
-    let start = (pageNo - 1) * this.pageSize + 1;
-    let end = pageNo * this.pageSize;
-    let index = 1;  
-    this.userList = []; 
-    for(let item of this.userDataSource){ 
-      if( index >= start && index <= end ){
-        this.userList.push(item);
-      }
-      if(index > end){
-        return;
-      }
-      index ++;       
-    }
   }
 
   pageChanged(event: any){
     console.log('Page changed to: ' + event.page);
     console.log('Number items per page: ' + event.itemsPerPage);
-    this.userList = null;
-    this.getPageItems(event.page);
+    this.searchData(event.page)
   }
 
   //-- END: Paging
@@ -152,11 +120,21 @@ export class UserComponent implements OnInit {
   // Delete user
   delete(id: number){
     console.log("Delete user : " + id);
-    //this.userList.splice(index, 1); 
-    this.userList = this.userList.filter(item => item.id !== id);
+    this.userService.delete(id).pipe(first())
+    .subscribe(
+      data => {
+        console.log(data);
+        let result:any = data
+        if(result.success){
+          this.alertService.success('Delete successful');
+        }else{
+          this.alertMessage = {  type: 'danger',  msg: result.data}
+        }
+      },
+      error => {
+        this.alertMessage = {  type: 'danger',  msg: error}
+    });
     this.closeModal();
-    let message = "User " + id  + " is deleted";
-    this.addMessage('success',message);
   }
 
   view(id: number){
@@ -173,15 +151,6 @@ export class UserComponent implements OnInit {
     };
   }
 
-
-  // Add alert
-  private addMessage(type:String, message:String){
-    this.alerts.push({
-      type: type,
-      msg: message,
-      timeout: 5000
-    });
-  }
 }
 
 

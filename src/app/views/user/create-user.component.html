@@ -1,79 +1,75 @@
 <!-- / Register Modal -->
 <div class="modal-header">
-  <h4 class="modal-title">監査対象Oracle 編集</h4>
+  <h4 class="modal-title">Register User</h4>
   <button type="button" class="close" (click)="modalRef.hide()" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
-<form name="registerForm" #registerForm="ngForm" (ngSubmit)="registerForm.form.valid && create()" class="form-horizontal" novalidate>
+<form name="registerForm" #registerForm="ngForm" (ngSubmit)="registerForm.form.valid && saveData()" class="form-horizontal" novalidate>
   <div class="modal-body">
+    <div *ngIf="alertMessage.type">
+        <alert [type]="alertMessage.type">{{ alertMessage.msg }}</alert>
+    </div>
     <div class="form-group row">
-      <label class="col-md-3 col-form-label" for="registername">登録名</label>
+      <label class="col-md-3 col-form-label" for="username">Username</label>
       <div class="col-md-9">
-        <input type="text" id="registername" name="registername" class="form-control is-invalid" [(ngModel)]="registerModel.registername"
-          #registername="ngModel" required [ngClass]="{ 'is-invalid': registerForm.submitted && registername.invalid }">
-        <div *ngIf="registerForm.submitted && registername.invalid" class="invalid-feedback">登録名 is required</div>
+        <input type="text" id="username" name="username" class="form-control"
+            [(ngModel)]="registerModel.username" #username="ngModel" 
+            [ngClass]="{ 'is-invalid': registerForm.submitted && username.invalid }" required>
+        <div *ngIf="registerForm.submitted && !username.valid" class="invalid-feedback">Username is required</div>
       </div>
     </div>
     <div class="form-group row">
-      <label class="col-md-3 col-form-label" for="hostname">IPアドレス</label>
+      <label class="col-md-3 col-form-label" for="password">Password</label>
       <div class="col-md-9">
-        <input type="text" id="hostname" name="hostname" class="form-control" [(ngModel)]="registerModel.hostname" #hostname="ngModel" required
-          [ngClass]="{ 'is-invalid': registerForm.submitted && hostname.invalid }">
-        <div *ngIf="registerForm.submitted && !hostname.valid" class="invalid-feedback">IPアドレス is required</div>
+        <input type="password" id="password" name="password" class="form-control" placeholder="Enter password…" 
+            [(ngModel)]="registerModel.password" #password="ngModel"
+            [ngClass]="{ 'is-invalid': registerForm.submitted && password.invalid }" required>
+        <div *ngIf="registerForm.submitted && !password.valid" class="invalid-feedback">Password is required</div>
       </div>
     </div>
     <div class="form-group row">
-      <label class="col-md-3 col-form-label" for="servicename">サービス名</label>
+      <label class="col-md-3 col-form-label" for="address">Address</label>
       <div class="col-md-9">
-        <input type="text" id="servicename" name="servicename" class="form-control" [(ngModel)]="registerModel.servicename" #servicename="ngModel"
-          [ngClass]="{ 'is-invalid': registerForm.submitted && servicename.invalid }" required>
-        <div *ngIf="registerForm.submitted && !servicename.valid" class="invalid-feedback">サービス名 is required</div>
+        <input type="address" id="address" name="address" class="form-control" placeholder="Enter address..."
+           [(ngModel)]="registerModel.address" #address="ngModel" 
+           [ngClass]="{ 'is-invalid': registerForm.submitted && address.invalid }" required>
+        <div *ngIf="registerForm.submitted && !address.valid" class="invalid-feedback">Address is required</div>
       </div>
     </div>
     <div class="form-group row">
-      <label class="col-md-3 col-form-label" for="port">ポート番号</label>
-      <div class="col-md-9">
-        <input type="text" id="port" name="port" class="form-control" [(ngModel)]="registerModel.port" #port="ngModel"
-            [ngClass]="{ 'is-invalid': registerForm.submitted && port.invalid }" required>
-        <div *ngIf="registerForm.submitted && !port.valid" class="invalid-feedback">ポート番号 is required</div>
-      </div>
-    </div>
-    <div class="form-group row">
-      <label class="col-md-3 col-form-label" for="username">ユーザー名</label>
-      <div class="col-md-9">
-        <input type="text" id="username" name="username" class="form-control" [(ngModel)]="registerModel.username" #username="ngModel" 
-          [ngClass]="{ 'is-invalid': registerForm.submitted && username.invalid }" required>
-        <div *ngIf="registerForm.submitted && !username.valid" class="invalid-feedback">ユーザー名 is required</div>
-      </div>
-    </div>
-    <div class="form-group row">
-      <label class="col-md-3 col-form-label" for="password">パスワード</label>
-      <div class="col-md-9">
-        <input type="password" id="password" name="password" class="form-control" placeholder="Enter password…" [(ngModel)]="registerModel.password"
-          #password="ngModel" [ngClass]="{ 'is-invalid': registerForm.submitted && password.invalid }" required>
-        <div *ngIf="registerForm.submitted && !password.valid" class="invalid-feedback">パスワード is required</div>
-      </div>
-    </div>
-    <div class="form-group row">
-      <label class="col-md-3 col-form-label" for="privilege-radio">ロール</label>
+      <label class="col-md-3 col-form-label" for="privilege-radio">Role</label>
       <div class="col-md-9">
         <div class="form-check form-check-inline mr-1">
-          <input class="form-check-input" type="radio" name="privilege-radio" id="privilege-default" [(ngModel)]="registerModel.privilegeradio"
-            value="privilege-default" checked>
-          <label class="form-check-label" for="privilege-default">デフォルト</label>
+          <input class="form-check-input" type="radio" name="privilege-radio" id="privilege-admin" 
+            [(ngModel)]="registerModel.role" value="3">
+          <label class="form-check-label" for="privilege-admin">Admin</label>
         </div>
         <div class="form-check form-check-inline mr-1">
-          <input class="form-check-input" type="radio" name="privilege-radio" id="privilege-sysdba" [(ngModel)]="registerModel.privilegeradio"
-            value="privilege-sysdba">
-          <label class="form-check-label" for="privilege-sysdba">SYSDBA</label>
+          <input class="form-check-input" type="radio" name="privilege-radio" id="privilege-member" 
+            [(ngModel)]="registerModel.role" value="4">
+          <label class="form-check-label" for="privilege-member">Member</label>
+        </div>
+        <div class="form-check form-check-inline mr-1">
+          <input class="form-check-input" type="radio" name="privilege-radio" id="privilege-staff" 
+            [(ngModel)]="registerModel.role" value="5">
+          <label class="form-check-label" for="privilege-staff">Staff</label>
         </div>
       </div>
     </div>
     <div class="form-group row">
-      <label class="col-md-3 col-form-label" for="description">説明</label>
+      <label class="col-md-3 col-form-label" for="privilege-radio">Status</label>
       <div class="col-md-9">
-        <input type="text" id="description" name="description" class="form-control" [(ngModel)]="registerModel.description" #description="ngModel">
+        <div class="form-check form-check-inline mr-1">
+          <input class="form-check-input" type="radio" name="status-radio" id="status-active" 
+            [(ngModel)]="registerModel.status" value="Active">
+          <label class="form-check-label" for="status-active">Active</label>
+        </div>
+        <div class="form-check form-check-inline mr-1">
+          <input class="form-check-input" type="radio" name="status-radio" id="status-inactive" 
+            [(ngModel)]="registerModel.status" value="Inactive">
+          <label class="form-check-label" for="status-inactive">Inactive</label>
+        </div>
       </div>
     </div>
   </div>

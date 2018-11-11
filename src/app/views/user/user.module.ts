@@ -11,6 +11,7 @@ import { CreateUserComponent } from './create-user.component';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 // Modal Component
+import { AlertModule } from 'ngx-bootstrap';
 import { ModalModule } from 'ngx-bootstrap/modal';
 
 // System Routing
@@ -23,23 +24,26 @@ import { PipesModule } from '../../pipes/pipes.module';
 import { ModalService } from '../../services/model.service';
 
 // Alert Component
-import { AlertModule } from 'ngx-bootstrap/alert';
+import { AlertComponent } from '../../directives/alert.component';
+import { SharedModule } from '../../share.module';
 
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    AlertModule,
     PaginationModule.forRoot(),
     ModalModule.forRoot(),
+    AlertModule.forRoot(),
     PipesModule,
-    UserRoutingModule
+    UserRoutingModule,
+    SharedModule,
   ],
   declarations: [
     UserComponent,
     CreateUserComponent,
-    EditUserComponent
+    EditUserComponent,
+    // AlertComponent
   ],
   providers: [
     ModalService,

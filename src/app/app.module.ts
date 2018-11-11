@@ -53,6 +53,7 @@ import {
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { SharedModule } from './share.module';
 
 @NgModule({
   imports: [
@@ -68,12 +69,12 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
     PerfectScrollbarModule,
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
-    ChartsModule
+    ChartsModule,
+    SharedModule,
   ],
   declarations: [
     AppComponent,
     ...APP_CONTAINERS,
-    AlertComponent,
     P404Component,
     P500Component,
     LoginComponent,
@@ -86,7 +87,7 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
     UserService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    // { provide: LocationStrategy, useClass: HashLocationStrategy },
     // provider used to create fake backend
     //fakeBackendProvider
   ],
